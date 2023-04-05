@@ -14,7 +14,6 @@
 #include <memory>
 
 using std::cout;
-using std::min;
 using std::move;
 
 //------------------------------------------------------------------------------
@@ -173,7 +172,7 @@ void List::deleteHeadNode() {
         if (pHead == pTail) {
             pTail = nullptr;
         }
-        
+
         Node* pTemp = pHead;
         pHead = pHead->pNext;
         delete pTemp;
@@ -201,6 +200,7 @@ void List::deleteTailNode() {
 
     // set the new tail node
     pTail = pPre;
+    pTail->pNext = nullptr;
 
     // delete the old tail node
     delete pCur;
@@ -218,13 +218,16 @@ void List::deleteAtPosition(int pos) {
         return;
     }
 
+    if (pos > size) {
+        deleteTailNode();
+        return;
+    }
+
     Node* pCur = pHead;
     Node* pPre = nullptr;
 
-    pos = min(pos, size);
     int i = 1;
-
-    while (i < pos && pCur != nullptr) {
+    while (i < pos) {
 
         pPre = pCur;
         pCur = pCur->pNext;
@@ -232,15 +235,11 @@ void List::deleteAtPosition(int pos) {
     }
 
     // set previous node pointer to skip over the node to delete
+    assert(pPre != nullptr && pCur != nullptr);
     pPre->pNext = pCur->pNext;
 
     // delete the requested node
     delete pCur;
-
-    // set the new tail and list size
-    if (pPre->pNext == nullptr) {
-        pTail = pPre;
-    }
 
     size--;
 }

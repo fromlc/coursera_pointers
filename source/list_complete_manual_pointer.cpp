@@ -16,7 +16,8 @@ using std::string;
 //------------------------------------------------------------------------------
 // constants
 //------------------------------------------------------------------------------
-const string DASHES = "\n--------------------------------------------------\n";
+const string DASHES = 
+"\n-------------------------------------------------------\n";
 
 //------------------------------------------------------------------------------
 // globals
@@ -36,6 +37,9 @@ void displayList(const string&);
 //------------------------------------------------------------------------------
 int main() {
 
+    cout << "\nLinked List demo with insertion and deletion at";
+    cout << "\nposition numbers that start with 1.\n";
+
     generateList();
     displayList("Initial List");
 
@@ -49,19 +53,19 @@ int main() {
     displayList("Inserting 60 At Position 5");
 
     app::listObj.deleteHeadNode();
-    displayList("Deleting At pHead");
+    displayList("Deleting Head Node");
 
     app::listObj.deleteTailNode();
-    displayList("Deleting At pTail");
+    displayList("Deleting Tail Node");
 
     app::listObj.deleteAtPosition(4);
-    displayList("Deleting At Position 4");
+    displayList("Deleting Node At Position 4");
 
     app::listObj.deleteAtPosition(app::listObj.getSize() + 1);
-    displayList("Deleting At Position Beyond List End");
+    displayList("Deleting At Position Beyond List End Deletes Tail Node");
 
     app::listObj.insertAtPosition(app::listObj.getSize() + 1, 85);
-    displayList("Inserting 85 At Position Beyond List End");
+    displayList("Inserting 85 At Position Beyond List End Sets New Tail");
 
     cout << DASHES;
 
@@ -84,8 +88,8 @@ void generateList() {
 //------------------------------------------------------------------------------
 void displayList(const string& message) {
 
-    cout << DASHES;
-    cout << message;
+    //cout << DASHES;
+    cout << '\n' << message;
     cout << DASHES;
     app::listObj.displayList();
     cout << "\nList size: " << app::listObj.getSize() << '\n';
