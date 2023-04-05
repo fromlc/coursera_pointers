@@ -8,6 +8,8 @@
 //------------------------------------------------------------------------------
 #include "List.h"
 
+//#define NDEBUG        // uncomment to disable assert()
+#include <cassert>
 #include <iostream>
 #include <memory>
 
@@ -154,12 +156,10 @@ void List::insertAtPosition(int pos, int value) {
     }
 
     // insert the new node
-    if (pPre != nullptr) {
-        pPre->pNext = pTemp;
-        pTemp->pNext = pCur;
-        size++;
-    }
-
+    assert(pPre != nullptr);
+    pPre->pNext = pTemp;
+    pTemp->pNext = pCur;
+    size++;
 }
 
 //------------------------------------------------------------------------------
@@ -169,6 +169,11 @@ void List::deleteHeadNode() {
 
     if (pHead != nullptr) {
 
+        // if the list has one node it will have zero
+        if (pHead == pTail) {
+            pTail = nullptr;
+        }
+        
         Node* pTemp = pHead;
         pHead = pHead->pNext;
         delete pTemp;
@@ -186,19 +191,18 @@ void List::deleteTailNode() {
     }
 
     Node* pCur = pHead;
-    Node* pPre = nullptr;
+    Node* pPre = pHead;
 
-    // find the node before the pTail node
+    // find the node before the tail node
     while (pCur->pNext != nullptr) {
         pPre = pCur;
         pCur = pCur->pNext;
     }
 
-    // set the new pTail node
-    pPre->pNext = nullptr;
+    // set the new tail node
     pTail = pPre;
 
-    // delete the old pTail node
+    // delete the old tail node
     delete pCur;
 
     size--;
@@ -233,7 +237,7 @@ void List::deleteAtPosition(int pos) {
     // delete the requested node
     delete pCur;
 
-    // set the new pTail and size
+    // set the new tail and list size
     if (pPre->pNext == nullptr) {
         pTail = pPre;
     }
