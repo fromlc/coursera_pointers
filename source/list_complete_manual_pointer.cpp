@@ -16,20 +16,20 @@ using std::string;
 //------------------------------------------------------------------------------
 // constants
 //------------------------------------------------------------------------------
-const string DASHES = 
+const string DASHES =
 "\n -------------------------------------------------------\n";
 
 //------------------------------------------------------------------------------
 // globals
 //------------------------------------------------------------------------------
 namespace app {
-    List listObj;
+    List* pList = nullptr;
 }
 
 //------------------------------------------------------------------------------
 // local function prototypes
 //------------------------------------------------------------------------------
-void generateList();
+List* generateList();
 void displayList(const string&);
 
 //------------------------------------------------------------------------------
@@ -40,34 +40,36 @@ int main() {
     cout << "\n Linked List demo with insertion and deletion at";
     cout << "\n position numbers that start with 1.\n";
 
-    generateList();
+    app::pList = generateList();
     displayList("Initial List");
 
-    app::listObj.createNode(55);
+    app::pList->createNode(55);
     displayList("Insert 55 At List Tail");
 
-    app::listObj.insertAtHead(50);
+    app::pList->insertAtHead(50);
     displayList("Insert 50 At List Head");
 
-    app::listObj.insertAtPosition(5, 60);
+    app::pList->insertAtPosition(5, 60);
     displayList("Insert 60 At Position 5");
 
-    app::listObj.deleteHeadNode();
+    app::pList->deleteHeadNode();
     displayList("Delete Head Node");
 
-    app::listObj.deleteTailNode();
+    app::pList->deleteTailNode();
     displayList("Delete Tail Node");
 
-    app::listObj.deleteAtPosition(4);
+    app::pList->deleteAtPosition(4);
     displayList("Delete Node At Position 4");
 
-    app::listObj.deleteAtPosition(app::listObj.getSize() + 1);
+    app::pList->deleteAtPosition(app::pList->getSize() + 1);
     displayList("Delete At Position > List Size Deletes Tail Node");
 
-    app::listObj.insertAtPosition(app::listObj.getSize() + 1, 85);
+    app::pList->insertAtPosition(app::pList->getSize() + 1, 85);
     displayList("Insert 85 At Position > List Size Sets New Tail");
 
     cout << DASHES;
+
+    delete app::pList;
 
     return 0;
 }
@@ -75,12 +77,16 @@ int main() {
 //------------------------------------------------------------------------------
 // create nodes to generate initial list
 //------------------------------------------------------------------------------
-void generateList() {
- 
-    app::listObj.createNode(25);
-    app::listObj.createNode(50);
-    app::listObj.createNode(90);
-    app::listObj.createNode(40);
+List* generateList() {
+
+    List* pL = new List;
+
+    pL->createNode(25);
+    pL->createNode(50);
+    pL->createNode(90);
+    pL->createNode(40);
+
+    return pL;
 }
 
 //------------------------------------------------------------------------------
@@ -91,6 +97,6 @@ void displayList(const string& message) {
     //cout << DASHES;
     cout << "\n " << message;
     cout << DASHES << ' ';
-    app::listObj.displayList();
-    cout << "\n List size: " << app::listObj.getSize() << '\n';
+    app::pList->displayList();
+    cout << "\n List size: " << app::pList->getSize() << '\n';
 }
