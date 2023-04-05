@@ -57,6 +57,12 @@ int main() {
     app::listObj.deleteAtPosition(4);
     displayList("Deleting At Position 4");
 
+    app::listObj.deleteAtPosition(app::listObj.getSize() + 1);
+    displayList("Deleting At Position Beyond List End");
+
+    app::listObj.insertAtPosition(app::listObj.getSize() + 1, 85);
+    displayList("Inserting 85 At Position Beyond List End");
+
     cout << DASHES;
 
     return 0;
@@ -82,4 +88,5 @@ void displayList(const string& message) {
     cout << message;
     cout << DASHES;
     app::listObj.displayList();
+    cout << "\nList size: " << app::listObj.getSize() << '\n';
 }

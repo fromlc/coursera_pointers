@@ -20,7 +20,9 @@ using std::move;
 //------------------------------------------------------------------------------
 List::List() : size(0), pHead(nullptr), pTail(nullptr) { }
 
+//------------------------------------------------------------------------------
 // destructor
+//------------------------------------------------------------------------------
 List::~List() {
     Node* current = pHead;
     Node* pTemp = nullptr;
@@ -36,7 +38,9 @@ List::~List() {
     pHead = pTail = nullptr;
 }
 
+//------------------------------------------------------------------------------
 // copy constructor
+//------------------------------------------------------------------------------
 List::List(const List& rhs) {
 
     pHead = rhs.pHead;
@@ -44,7 +48,9 @@ List::List(const List& rhs) {
     size = rhs.size;
 }
 
+//------------------------------------------------------------------------------
 // assignment operator
+//------------------------------------------------------------------------------
 const List& List::operator=(const List& rhs) {
 
     if (this != &rhs) {
@@ -57,7 +63,9 @@ const List& List::operator=(const List& rhs) {
     return *this;
 }
 
+//------------------------------------------------------------------------------
 // move constructor
+//------------------------------------------------------------------------------
 List::List(List&& rhs) noexcept {
 
     this->pHead = this->pTail = nullptr;
@@ -67,7 +75,9 @@ List::List(List&& rhs) noexcept {
         *this = move(rhs);
 }
 
-// create list node
+//------------------------------------------------------------------------------
+// create list node and make it the new list head
+//------------------------------------------------------------------------------
 void List::createNode(int value) {
 
     Node* pTemp = new Node(value);
@@ -83,7 +93,9 @@ void List::createNode(int value) {
     size++;
 }
 
+//------------------------------------------------------------------------------
 // display list nodes
+//------------------------------------------------------------------------------
 void List::displayList() {
 
     Node* pTemp = pHead;
@@ -94,7 +106,9 @@ void List::displayList() {
     }
 }
 
-// insert a list node at the beginning of the list
+//------------------------------------------------------------------------------
+// insert a list node at the beginning (head) of the list
+//------------------------------------------------------------------------------
 void List::insertAtHead(int value) {
 
     Node* pTemp = new Node(value);
@@ -104,11 +118,15 @@ void List::insertAtHead(int value) {
     size++;
 }
 
-// insert a list node at the passed position, or at the end of the list
+//------------------------------------------------------------------------------
+// insert a list node at the passed position, 
+// or at the tail of the list if passed position is beyond the list end
+//------------------------------------------------------------------------------
 void List::insertAtPosition(int pos, int value) {
 
     Node* pTemp = new Node(value);
 
+    // check for empty list
     if (pHead == nullptr) {
 
         pHead = pTemp;
@@ -116,11 +134,17 @@ void List::insertAtPosition(int pos, int value) {
         return;
     }
 
+    // check for new tail
+    if (pos > size) {
+        pTail->pNext = pTemp;
+        size++;
+        return;
+    }
+
     Node* pCur = pHead;
     Node* pPre = nullptr;
 
     // find the position to insert the new node
-    pos = min(pos, size);
     int i = 1;
     while (i < pos && pCur != nullptr) {
 
@@ -133,17 +157,14 @@ void List::insertAtPosition(int pos, int value) {
     if (pPre != nullptr) {
         pPre->pNext = pTemp;
         pTemp->pNext = pCur;
+        size++;
     }
 
-    // set new pTail if needed
-    if (pCur == nullptr) {
-        pTail = pTemp;
-    }
-
-    size++;
 }
 
-// delete the node at the pHead of the list (first node in the list)
+//------------------------------------------------------------------------------
+// delete the head node (first node in the list)
+//------------------------------------------------------------------------------
 void List::deleteHeadNode() {
 
     if (pHead != nullptr) {
@@ -155,7 +176,9 @@ void List::deleteHeadNode() {
     }
 }
 
-// delete the node at the pTail of the list (last node in the list)
+//------------------------------------------------------------------------------
+// delete the tail node (last node in the list)
+//------------------------------------------------------------------------------
 void List::deleteTailNode() {
 
     if (pHead == nullptr) {
@@ -181,7 +204,10 @@ void List::deleteTailNode() {
     size--;
 }
 
-// delete a list node at the passed position, or at the end of the list
+//------------------------------------------------------------------------------
+// delete the list node at the passed position,
+// or delete the tail (last) node if position is beyond the end of the list
+//------------------------------------------------------------------------------
 void List::deleteAtPosition(int pos) {
 
     if (pHead == nullptr) {
@@ -214,4 +240,9 @@ void List::deleteAtPosition(int pos) {
 
     size--;
 }
+
+//------------------------------------------------------------------------------
+// return the number of items in the list
+//------------------------------------------------------------------------------
+int List::getSize() const { return size; }
 

@@ -55,4 +55,7 @@ public:
 
     // delete a list node at the passed position, or at the end of the list
     void deleteAtPosition(int pos);
+
+    // return the number of items in the list
+    int getSize() const;
 };
