@@ -24,6 +24,7 @@ const string DASHES =
 //------------------------------------------------------------------------------
 namespace app {
     List* pList = nullptr;
+    int nodeValues[] = { 25, 50, 90, 40 };
 }
 
 //------------------------------------------------------------------------------
@@ -81,10 +82,11 @@ List* generateList() {
 
     List* pL = new List;
 
-    pL->createNode(25);
-    pL->createNode(50);
-    pL->createNode(90);
-    pL->createNode(40);
+    int itemCount = sizeof(app::nodeValues) / sizeof(int);
+
+    for (int i = 0; i < itemCount; ++i) {
+        pL->createNode(app::nodeValues[i]);
+    }
 
     return pL;
 }
