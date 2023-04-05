@@ -17,7 +17,7 @@ using std::string;
 // constants
 //------------------------------------------------------------------------------
 const string DASHES = 
-"\n-------------------------------------------------------\n";
+"\n -------------------------------------------------------\n";
 
 //------------------------------------------------------------------------------
 // globals
@@ -37,35 +37,35 @@ void displayList(const string&);
 //------------------------------------------------------------------------------
 int main() {
 
-    cout << "\nLinked List demo with insertion and deletion at";
-    cout << "\nposition numbers that start with 1.\n";
+    cout << "\n Linked List demo with insertion and deletion at";
+    cout << "\n position numbers that start with 1.\n";
 
     generateList();
     displayList("Initial List");
 
     app::listObj.createNode(55);
-    displayList("Inserting 55 At pTail");
+    displayList("Insert 55 At List Tail");
 
     app::listObj.insertAtHead(50);
-    displayList("Inserting 50 At pHead");
+    displayList("Insert 50 At List Head");
 
     app::listObj.insertAtPosition(5, 60);
-    displayList("Inserting 60 At Position 5");
+    displayList("Insert 60 At Position 5");
 
     app::listObj.deleteHeadNode();
-    displayList("Deleting Head Node");
+    displayList("Delete Head Node");
 
     app::listObj.deleteTailNode();
-    displayList("Deleting Tail Node");
+    displayList("Delete Tail Node");
 
     app::listObj.deleteAtPosition(4);
-    displayList("Deleting Node At Position 4");
+    displayList("Delete Node At Position 4");
 
     app::listObj.deleteAtPosition(app::listObj.getSize() + 1);
-    displayList("Deleting At Position Beyond List End Deletes Tail Node");
+    displayList("Delete At Position > List Size Deletes Tail Node");
 
     app::listObj.insertAtPosition(app::listObj.getSize() + 1, 85);
-    displayList("Inserting 85 At Position Beyond List End Sets New Tail");
+    displayList("Insert 85 At Position > List Size Sets New Tail");
 
     cout << DASHES;
 
@@ -89,8 +89,8 @@ void generateList() {
 void displayList(const string& message) {
 
     //cout << DASHES;
-    cout << '\n' << message;
-    cout << DASHES;
+    cout << "\n " << message;
+    cout << DASHES << ' ';
     app::listObj.displayList();
-    cout << "\nList size: " << app::listObj.getSize() << '\n';
+    cout << "\n List size: " << app::listObj.getSize() << '\n';
 }
